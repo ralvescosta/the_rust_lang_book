@@ -50,8 +50,9 @@ fn notify<T: Summary>(item: &T) {
 fn some_function<T, U>(t: &T, u: &U) -> i32
 where
     T: Display + Clone,
-    U: Clone + Debug,
+    U: Clone,
 {
+    10
 }
 fn main() {
     println!("Hello, world!");
