@@ -1,11 +1,11 @@
 #[derive(Debug)]
-pub struct Rectangle {
+struct Rectangle {
     width: u32,
     height: u32,
 }
 
 impl Rectangle {
-    pub fn can_hold(&self, other: &Rectangle) -> bool {
+    fn can_hold(&self, other: &Rectangle) -> bool {
         self.width > other.width && self.height > other.height
     }
 }
@@ -14,7 +14,7 @@ pub fn add_two(n: i32) -> i32 {
 }
 
 pub struct Guess {
-    pub value: i32,
+    value: i32,
 }
 
 impl Guess {
@@ -75,7 +75,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "Guess value must be less than or equal to 100, got 200")]
+    #[should_panic(expected = "Guess value must be less than or equal to 100")]
     fn greater_than_100() {
         Guess::new(200);
     }
