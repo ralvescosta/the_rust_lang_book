@@ -40,22 +40,23 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::cell::RefCell;
 
-    struct MockMessenger {
-        set_messages: Vec<String>,
+    pub struct MockMessenger {
+        pub set_messages: RefCell<Vec<String>>,
     }
 
     impl MockMessenger {
         fn new() -> MockMessenger {
             MockMessenger {
-                set_messages: vec![],
+                set_messages: RefCell::new(vec![]),
             }
         }
     }
 
     impl Messenger for MockMessenger {
         fn send(&self, message: &str) {
-            self.set_messages.push(String::from(message))
+            self.set_messages.borrow_mut().push(String::from(message))
         }
     }
 
@@ -66,6 +67,6 @@ mod tests {
 
         limit_tracker.set_value(80);
 
-        assert_eq!(mock_messenger.set_messages.len(), 1)
+        assert_eq!(mock_messenger.set_messages.borrow().len(), 1);
     }
 }
