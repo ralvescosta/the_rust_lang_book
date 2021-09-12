@@ -51,7 +51,7 @@ impl Handler<ComplexTask> for MyActor {
 }
 
 pub fn runner() -> Result<()> {
-    let mut sys = actix::System::new();
+    let sys = actix::System::new();
 
     sys.block_on(async {
         let _addr = MyActor {}.start();
