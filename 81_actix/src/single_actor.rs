@@ -1,6 +1,5 @@
 use actix::prelude::*;
 use anyhow::Result;
-use futures::prelude::*;
 use tokio::time::{sleep, Duration};
 
 pub struct SmallTask;
