@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use std::{convert::Infallible, error::Error, pin::Pin};
 
 use futures::{future, Future, FutureExt};
 use log::debug;
@@ -40,12 +40,16 @@ pub fn run_2() {
     println!("");
 }
 
-pub fn returns_feature_i32() -> impl Future<Output = i32> {
+pub fn returns_future_i32() -> impl Future<Output = i32> {
     future::ready(10)
 }
 
-pub fn returns_dyn_feature_i32() -> Pin<Box<dyn Future<Output = i32> + Send>> {
+pub fn returns_dyn_future_i32() -> Pin<Box<dyn Future<Output = i32> + Send>> {
     future::ready(32).boxed()
+}
+
+pub fn returns_future_result() -> impl Future<Output = Result<i32, impl Error>> {
+    future::ok::<_, Infallible>(32)
 }
 
 pub fn run_3() {
@@ -56,6 +60,7 @@ pub fn run_3() {
         .build()
         .unwrap();
 
-    rt.spawn(returns_feature_i32());
-    rt.spawn(returns_dyn_feature_i32());
+    rt.spawn(returns_future_i32());
+    rt.spawn(returns_dyn_future_i32());
+    rt.spawn(returns_future_result());
 }
